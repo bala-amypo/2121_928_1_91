@@ -1,7 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class CategorizationRule {
@@ -10,30 +9,27 @@ public class CategorizationRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    private Category category;
-
-    @Column(nullable = false)
     private String keyword;
 
-    @Column(nullable = false)
-    private String matchType;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    private Integer priority = 1;
-
-    private LocalDateTime createdAt;
-
-    public CategorizationRule() {}
-
-    @PrePersist
-    void onCreate() {
-        if (priority == null) priority = 1;
-        this.createdAt = LocalDateTime.now();
+    // ✅ REQUIRED SETTER
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    // getters
-    public String getKeyword() { return keyword; }
-    public String getMatchType() { return matchType; }
-    public Category getCategory() { return category; }
-    public Integer getPriority() { return priority; }
+    // Optional but recommended
+    public Category getCategory() {
+        return category;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
 }
