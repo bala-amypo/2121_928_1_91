@@ -13,31 +13,33 @@ import java.util.List;
 @Service
 public class CategorizationRuleServiceImpl implements CategorizationRuleService {
 
-    private final CategorizationRuleRepository ruleRepository;
-    private final CategoryRepository categoryRepository;
+    private final CategorizationRuleRepository ruleRepo;
+    private final CategoryRepository categoryRepo;
 
-    public CategorizationRuleServiceImpl(CategorizationRuleRepository ruleRepository,
-                                         CategoryRepository categoryRepository) {
-        this.ruleRepository = ruleRepository;
-        this.categoryRepository = categoryRepository;
+    public CategorizationRuleServiceImpl(
+            CategorizationRuleRepository ruleRepo,
+            CategoryRepository categoryRepo) {
+        this.ruleRepo = ruleRepo;
+        this.categoryRepo = categoryRepo;
     }
 
     @Override
-    public CategorizationRule createRule(Long categoryId, CategorizationRule rule) {
-        Category category = categoryRepository.findById(categoryId)
+    public CategorizationRule create(Long categoryId, CategorizationRule rule) {
+        Category category = categoryRepo.findById(categoryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+
         rule.setCategory(category);
-        return ruleRepository.save(rule);
+        return ruleRepo.save(rule);
     }
 
     @Override
-    public List<CategorizationRule> getRulesByCategory(Long categoryId) {
-        return ruleRepository.findByCategoryId(categoryId);
-    }
-
-    @Override
-    public CategorizationRule getRule(Long id) {
-        return ruleRepository.findById(id)
+    public CategorizationRule get(Long id) {
+        return ruleRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Rule not found"));
+    }
+
+    @Override
+    public List<CategorizationRule> getByCategory(Long categoryId) {
+        return ruleRepo.findByCategoryId(categoryId);
     }
 }
