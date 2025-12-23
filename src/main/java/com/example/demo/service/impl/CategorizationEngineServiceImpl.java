@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // 🔥 THIS IS THE KEY
+@Service
 public class CategorizationEngineServiceImpl implements CategorizationEngineService {
 
     private final TicketRepository ticketRepository;
@@ -26,8 +26,6 @@ public class CategorizationEngineServiceImpl implements CategorizationEngineServ
     public Ticket categorizeTicket(Long ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found"));
-
-        // Minimal logic (enough for Swagger & tests)
         return ticketRepository.save(ticket);
     }
 
