@@ -12,11 +12,12 @@ public class User {
 
     private String username;
 
+    @Column(unique = true)
     private String email;
 
     private String password;
 
-    // ---- getters & setters ----
+    public User() {}
 
     public Long getId() {
         return id;
