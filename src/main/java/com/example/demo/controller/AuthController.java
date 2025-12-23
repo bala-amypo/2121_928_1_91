@@ -5,17 +5,22 @@ import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
-public class AuthController {
+@RequestMapping("/api/users")
+public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
 
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
-    @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return userService.register(user);
+    @PostMapping
+    public User create(@RequestBody User user) {
+        return service.create(user);
+    }
+
+    @GetMapping("/{id}")
+    public User get(@PathVariable Long id) {
+        return service.get(id);
     }
 }
