@@ -1,7 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.BadRequestException;
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
@@ -10,20 +8,31 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repo;
+    private final UserRepository repository;
 
-    public UserServiceImpl(UserRepository repo) {
-        this.repo = repo;
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
     }
 
-    public User create(User user) {
-        if (repo.findByEmail(user.getEmail()).isPresent())
-            throw new BadRequestException("Email already in use");
-        return repo.save(user);
+    @Override
+    public User register(User user) {
+        return repository.save(user);
     }
 
-    public User get(Long id) {
-        return repo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    @Override
+    public User login(String email, String password) {
+        User user = repository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Invalid email"));
+
+        if (!user.getPassword().equals(password)) {
+            throw new RuntimeException("Invalid password");
+        }
+        return user;
+    }
+
+    @Override
+    public User getById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

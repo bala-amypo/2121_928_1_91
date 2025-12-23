@@ -5,7 +5,7 @@ import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
 
     private final UserService service;
@@ -14,13 +14,15 @@ public class UserController {
         this.service = service;
     }
 
+    // REGISTER
     @PostMapping
-    public User create(@RequestBody User user) {
-        return service.create(user);
+    public User register(@RequestBody User user) {
+        return service.register(user);
     }
 
-    @GetMapping("/{id}")
-    public User get(@PathVariable Long id) {
-        return service.get(id);
+    // LOGIN
+    @PostMapping("/login")
+    public User login(@RequestBody User user) {
+        return service.login(user.getEmail(), user.getPassword());
     }
 }
