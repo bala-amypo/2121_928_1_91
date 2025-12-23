@@ -1,10 +1,9 @@
 package com.example.demo.repository;
 
-import com.example.demo.model.Ticket;
+import com.example.demo.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-import java.util.List;
-
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    List<Ticket> findByAssignedCategoryId(Long categoryId);
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
 }
