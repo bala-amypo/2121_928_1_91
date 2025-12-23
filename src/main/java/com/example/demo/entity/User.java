@@ -12,16 +12,14 @@ public class User {
 
     private String username;
 
+    private String email;   // ✅ ADD THIS
+
     private String password;
 
-    // ✅ REQUIRED SETTER
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    // ---------- GETTERS & SETTERS ----------
 
-    // Optional getters/setters
-    public String getPassword() {
-        return password;
+    public Long getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -30,5 +28,23 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    // ✅ REQUIRED BY UserServiceImpl
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    // ✅ REQUIRED BY UserServiceImpl
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
