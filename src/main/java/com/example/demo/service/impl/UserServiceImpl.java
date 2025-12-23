@@ -16,7 +16,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        // NO encoding, direct save
         return userRepository.save(user);
+    }
+
+    // ✅ REQUIRED METHOD
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
     }
 }

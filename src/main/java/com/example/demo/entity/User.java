@@ -12,11 +12,11 @@ public class User {
 
     private String username;
 
-    private String email;   // ✅ ADD THIS
+    private String email;
 
     private String password;
 
-    // ---------- GETTERS & SETTERS ----------
+    // ---- getters & setters ----
 
     public Long getId() {
         return id;
@@ -30,7 +30,6 @@ public class User {
         this.username = username;
     }
 
-    // ✅ REQUIRED BY UserServiceImpl
     public String getEmail() {
         return email;
     }
@@ -39,7 +38,6 @@ public class User {
         this.email = email;
     }
 
-    // ✅ REQUIRED BY UserServiceImpl
     public String getPassword() {
         return password;
     }
