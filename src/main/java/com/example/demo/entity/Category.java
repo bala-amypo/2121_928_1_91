@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "categories", uniqueConstraints = @UniqueConstraint(columnNames = "categoryName"))
+@Table(name = "categories")
 public class Category {
 
     @Id
@@ -22,23 +22,17 @@ public class Category {
 
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "category")
-    private List<CategorizationRule> rules;
-
-    public Category() {}
-
-    public Category(String categoryName, String defaultUrgency) {
-        this.categoryName = categoryName;
-        this.defaultUrgency = defaultUrgency;
-    }
+    @OneToMany(mappedBy = "assignedCategory")
+    private List<Ticket> tickets;
 
     @PrePersist
     void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
     }
 
-    // getters
     public Long getId() { return id; }
     public String getCategoryName() { return categoryName; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
     public String getDefaultUrgency() { return defaultUrgency; }
+    public void setDefaultUrgency(String defaultUrgency) { this.defaultUrgency = defaultUrgency; }
 }

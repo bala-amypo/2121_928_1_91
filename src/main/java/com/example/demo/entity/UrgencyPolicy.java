@@ -20,14 +20,10 @@ public class UrgencyPolicy {
 
     private LocalDateTime createdAt;
 
-    public UrgencyPolicy() {}
-
     @PrePersist
     void onCreate() {
-        this.createdAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
     }
 
-    // getters
-    public String getKeyword() { return keyword; }
-    public String getUrgencyOverride() { return urgencyOverride; }
+    public Long getId() { return id; }
 }
