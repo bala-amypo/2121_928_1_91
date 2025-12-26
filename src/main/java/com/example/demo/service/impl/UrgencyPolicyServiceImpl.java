@@ -6,21 +6,33 @@ import com.example.demo.repository.UrgencyPolicyRepository;
 import com.example.demo.service.UrgencyPolicyService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UrgencyPolicyServiceImpl implements UrgencyPolicyService {
+public class UrgencyPolicyServiceImpl
+        implements UrgencyPolicyService {
 
-    private final UrgencyPolicyRepository repo;
+    private final UrgencyPolicyRepository repository;
 
-    public UrgencyPolicyServiceImpl(UrgencyPolicyRepository repo) {
-        this.repo = repo;
+    public UrgencyPolicyServiceImpl(
+            UrgencyPolicyRepository repository) {
+        this.repository = repository;
     }
 
-    public UrgencyPolicy create(UrgencyPolicy policy) {
-        return repo.save(policy);
+    @Override
+    public UrgencyPolicy createPolicy(UrgencyPolicy policy) {
+        return repository.save(policy);
     }
 
-    public UrgencyPolicy get(Long id) {
-        return repo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Policy not found"));
+    @Override
+    public UrgencyPolicy getPolicy(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Policy not found"));
+    }
+
+    @Override
+    public List<UrgencyPolicy> getPoliciesByKeyword(String keyword) {
+        return repository.findByKeywordContainingIgnoreCase(keyword);
     }
 }
