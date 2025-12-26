@@ -9,18 +9,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-    private final CategoryRepository repo;
+    private final CategoryRepository repository;
 
-    public CategoryServiceImpl(CategoryRepository repo) {
-        this.repo = repo;
+    public CategoryServiceImpl(CategoryRepository repository) {
+        this.repository = repository;
     }
 
-    public Category create(Category category) {
-        return repo.save(category);
+    @Override
+    public Category createCategory(Category category) {
+        return repository.save(category);
     }
 
-    public Category get(Long id) {
-        return repo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+    @Override
+    public Category getCategory(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Category not found"));
     }
 }
