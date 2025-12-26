@@ -15,7 +15,12 @@ public class UrgencyPolicyController {
     }
 
     @PostMapping
-    public UrgencyPolicy create(@RequestBody UrgencyPolicy p) {
-        return service.createPolicy(p);
+    public UrgencyPolicy create(@RequestBody UrgencyPolicy policy) {
+        return service.createPolicy(policy);
+    }
+
+    @GetMapping("/{id}")
+    public UrgencyPolicy get(@PathVariable Long id) {
+        return service.getPolicy(id);
     }
 }
