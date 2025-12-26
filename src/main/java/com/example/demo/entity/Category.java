@@ -5,34 +5,27 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "categories")
 public class Category {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String categoryName;
-
-    private String description;
-
-    @Column(nullable = false)
-    private String defaultUrgency;
-
+    private String name;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "assignedCategory")
-    private List<Ticket> tickets;
+    @OneToMany(mappedBy = "category")
+    private List<UrgencyPolicy> urgencyPolicies;
 
     @PrePersist
-    void onCreate() {
-        createdAt = LocalDateTime.now();
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
     }
 
+    // Getters and Setters
     public Long getId() { return id; }
-    public String getCategoryName() { return categoryName; }
-    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
-    public String getDefaultUrgency() { return defaultUrgency; }
-    public void setDefaultUrgency(String defaultUrgency) { this.defaultUrgency = defaultUrgency; }
+    public void setId(Long id) { this.id = id; }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public List<UrgencyPolicy> getUrgencyPolicies() { return urgencyPolicies; }
+    public void setUrgencyPolicies(List<UrgencyPolicy> urgencyPolicies) { this.urgencyPolicies = urgencyPolicies; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }
