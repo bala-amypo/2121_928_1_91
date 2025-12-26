@@ -1,17 +1,22 @@
 package com.example.demo.service;
 
 import com.example.demo.model.CategorizationRule;
-
 import java.util.List;
 
 public interface CategorizationRuleService {
 
-    CategorizationRule create(CategorizationRule rule);
+    // Create a new rule
+    CategorizationRule createRule(CategorizationRule rule);
 
-    CategorizationRule getById(Long id);
+    // Get all rules
+    List<CategorizationRule> getAllRules();
 
-    List<CategorizationRule> getByCategory(Long categoryId);
+    // Get rule by ID
+    CategorizationRule getRuleById(Long id);
 
-    // 🔴 THIS METHOD WAS MISSING IN IMPL
+    // Delete rule by ID
+    void deleteRule(Long id);
+
+    // Optional: method for searching by keyword
     List<CategorizationRule> getRulesByKeyword(String keyword);
 }
