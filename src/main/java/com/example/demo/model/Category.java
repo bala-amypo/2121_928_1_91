@@ -9,8 +9,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
+    private String categoryName;
     private String defaultUrgency;
 
     public Category() {}
@@ -23,12 +22,14 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    // ✅ REQUIRED BY TESTS
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    // ✅ REQUIRED BY TESTS
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public String getDefaultUrgency() {
