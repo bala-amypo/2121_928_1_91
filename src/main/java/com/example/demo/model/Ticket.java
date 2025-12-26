@@ -12,14 +12,31 @@ public class Ticket {
     private String description;
 
     @ManyToOne
-    private Category category;
+    private Category assignedCategory;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Ticket() {}
 
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    public Long getId() {
+        return id;
+    }
 
-    public Category getCategory() { return category; }
-    public void setCategory(Category category) { this.category = category; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Category getAssignedCategory() {
+        return assignedCategory;
+    }
+
+    public void setAssignedCategory(Category assignedCategory) {
+        this.assignedCategory = assignedCategory;
+    }
 }
