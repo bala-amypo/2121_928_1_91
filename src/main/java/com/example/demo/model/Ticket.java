@@ -9,9 +9,9 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
     private String description;
-
-    private String urgencyLevel;   // ✅ REQUIRED
+    private String urgencyLevel;
 
     @ManyToOne
     private Category assignedCategory;
@@ -26,6 +26,16 @@ public class Ticket {
         this.id = id;
     }
 
+    // ✅ REQUIRED BY TESTS
+    public String getTitle() {
+        return title;
+    }
+
+    // ✅ REQUIRED BY TESTS
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -38,7 +48,6 @@ public class Ticket {
         return urgencyLevel;
     }
 
-    // ✅ REQUIRED BY TicketCategorizationEngine
     public void setUrgencyLevel(String urgencyLevel) {
         this.urgencyLevel = urgencyLevel;
     }
