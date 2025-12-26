@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CategorizationRuleRepository extends JpaRepository<CategorizationRule, Long> {
     List<CategorizationRule> findByCategoryId(Long categoryId);
+    List<CategorizationRule> findByKeywordContainingIgnoreCase(String keyword);
 }
