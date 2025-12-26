@@ -15,12 +15,30 @@ public class CategorizationLog {
     @ManyToOne
     private Category category;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private String urgency;
 
-    public Ticket getTicket() { return ticket; }
-    public void setTicket(Ticket ticket) { this.ticket = ticket; }
+    public CategorizationLog() {}
 
-    public Category getCategory() { return category; }
-    public void setCategory(Category category) { this.category = category; }
+    // ✅ REQUIRED BY TicketCategorizationEngine
+    public CategorizationLog(Ticket ticket, Category category, String urgency) {
+        this.ticket = ticket;
+        this.category = category;
+        this.urgency = urgency;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public String getUrgency() {
+        return urgency;
+    }
 }

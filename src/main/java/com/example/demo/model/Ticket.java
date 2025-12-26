@@ -11,6 +11,8 @@ public class Ticket {
 
     private String description;
 
+    private String urgencyLevel;   // ✅ REQUIRED
+
     @ManyToOne
     private Category assignedCategory;
 
@@ -30,6 +32,15 @@ public class Ticket {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUrgencyLevel() {
+        return urgencyLevel;
+    }
+
+    // ✅ REQUIRED BY TicketCategorizationEngine
+    public void setUrgencyLevel(String urgencyLevel) {
+        this.urgencyLevel = urgencyLevel;
     }
 
     public Category getAssignedCategory() {

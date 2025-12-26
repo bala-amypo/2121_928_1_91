@@ -9,11 +9,33 @@ public class UrgencyPolicy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String level;
+    private String keyword;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    private String urgencyOverride;
 
-    public String getLevel() { return level; }
-    public void setLevel(String level) { this.level = level; }
+    public UrgencyPolicy() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
+    public String getUrgencyOverride() {
+        return urgencyOverride;
+    }
+
+    public void setUrgencyOverride(String urgencyOverride) {
+        this.urgencyOverride = urgencyOverride;
+    }
 }
