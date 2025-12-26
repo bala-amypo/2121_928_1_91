@@ -2,43 +2,31 @@ package com.example.demo.controller;
 
 import com.example.demo.model.CategorizationRule;
 import com.example.demo.service.CategorizationRuleService;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/rules")
-@Tag(name = "Categorization Rules")
 public class CategorizationRuleController {
 
-    private final CategorizationRuleService service;
+    @Autowired
+    private CategorizationRuleService service;
 
-    public CategorizationRuleController(CategorizationRuleService service) {
-        this.service = service;
+    @PostMapping("/category/{categoryId}")
+    public CategorizationRule createRule(@PathVariable Long categoryId, @RequestBody CategorizationRule rule) {
+        return service.createRule(categoryId, rule);
     }
 
-    // POST /api/rules/{categoryId}
-    @PostMapping("/{categoryId}")
-    public ResponseEntity<CategorizationRule> createRule(
-            @PathVariable Long categoryId,
-            @RequestBody CategorizationRule rule) {
-
-        CategorizationRule savedRule = service.createRule(categoryId, rule);
-        return new ResponseEntity<>(savedRule, HttpStatus.CREATED);
-    }
-
-    // GET /api/rules/{id}
     @GetMapping("/{id}")
-    public ResponseEntity<CategorizationRule> getRule(@PathVariable Long id) {
-        return ResponseEntity.ok(service.getRule(id));
+    public CategorizationRule getRule(@PathVariable Long id) {
+        return service.getRule(id);
     }
 
-    // Inside your GET method for category rules:
-@GetMapping("/category/{categoryId}")
-public List<CategorizationRule> getByCategory(@PathVariable Long categoryId) {
-    // Change service.getByCategory to service.getRulesByCategory
-    return service.getRulesByCategory(categoryId); 
-}
+    @GetMapping("/category/{categoryId}")
+    public List<CategorizationRule> getByCategory(@PathVariable Long categoryId) {
+        // This must match the method name in your Service Interface
+        return service.getRulesByCategory(categoryId);
+    }
+} // <--- Check if this brace exists!
