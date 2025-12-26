@@ -16,20 +16,24 @@ public class CategorizationRuleController {
         this.service = service;
     }
 
+    // POST /api/rules/{categoryId}
     @PostMapping("/{categoryId}")
-    public CategorizationRule create(
+    public CategorizationRule createRule(
             @PathVariable Long categoryId,
             @RequestBody CategorizationRule rule) {
-        return service.create(categoryId, rule);
+        return service.createRule(categoryId, rule);
     }
 
+    // GET /api/rules/{id}
     @GetMapping("/{id}")
-    public CategorizationRule get(@PathVariable Long id) {
-        return service.get(id);
+    public CategorizationRule getRule(@PathVariable Long id) {
+        return service.getRule(id);
     }
 
+    // GET /api/rules/category/{categoryId}
     @GetMapping("/category/{categoryId}")
-    public List<CategorizationRule> getByCategory(@PathVariable Long categoryId) {
-        return service.getByCategory(categoryId);
+    public List<CategorizationRule> getRulesByCategory(
+            @PathVariable Long categoryId) {
+        return service.getRulesByCategory(categoryId);
     }
 }
