@@ -4,10 +4,8 @@ import com.example.demo.model.CategorizationRule;
 import java.util.List;
 
 public interface CategorizationRuleService {
-
     CategorizationRule createRule(Long categoryId, CategorizationRule rule);
-
-    List<CategorizationRule> getRulesByCategory(Long categoryId);
-
     CategorizationRule getRule(Long id);
+    // Ensure this is named exactly like this:
+    List<CategorizationRule> getRulesByCategory(Long categoryId);
 }
