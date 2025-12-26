@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "categorization_logs")
 public class CategorizationLog {
 
     @Id
@@ -15,18 +14,28 @@ public class CategorizationLog {
     private Ticket ticket;
 
     @ManyToOne
-    private CategorizationRule appliedRule;
+    private Category category;
 
-    private String matchedKeyword;
-    private String assignedCategory;
-    private String assignedUrgency;
+    private String action;
+    private LocalDateTime createdAt;
 
-    private LocalDateTime loggedAt;
+    public CategorizationLog() {}
 
-    @PrePersist
-    void prePersist() {
-        loggedAt = LocalDateTime.now();
+    public CategorizationLog(Ticket ticket, Category category, String action) {
+        this.ticket = ticket;
+        this.category = category;
+        this.action = action;
+        this.createdAt = LocalDateTime.now();
     }
 
-    // getters & setters
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public Long getId() { return id; }
+    public Ticket getTicket() { return ticket; }
+    public Category getCategory() { return category; }
+    public String getAction() { return action; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
 }

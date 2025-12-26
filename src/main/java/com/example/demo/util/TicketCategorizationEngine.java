@@ -6,10 +6,13 @@ import java.util.List;
 
 public class TicketCategorizationEngine {
 
-    public void applyRules(
+    // ✅ METHOD REQUIRED BY TESTS
+    public void categorize(
             Ticket ticket,
+            List<Category> categories,
             List<CategorizationRule> rules,
-            List<UrgencyPolicy> policies
+            List<UrgencyPolicy> policies,
+            List<CategorizationLog> logs
     ) {
 
         for (CategorizationRule rule : rules) {
@@ -21,6 +24,12 @@ public class TicketCategorizationEngine {
                 ticket.setUrgencyLevel(
                         rule.getCategory().getDefaultUrgency()
                 );
+
+                logs.add(new CategorizationLog(
+                        ticket,
+                        rule.getCategory(),
+                        "RULE_MATCH"
+                ));
                 break;
             }
         }
@@ -31,6 +40,12 @@ public class TicketCategorizationEngine {
                         .contains(policy.getKeyword().toLowerCase())) {
 
                 ticket.setUrgencyLevel(policy.getUrgencyOverride());
+
+                logs.add(new CategorizationLog(
+                        ticket,
+                        ticket.getAssignedCategory(),
+                        "URGENCY_OVERRIDE"
+                ));
                 break;
             }
         }
