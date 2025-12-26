@@ -14,12 +14,10 @@
     <name>demo</name>
     <description>Maintenance Root Cause Project</description>
 
-    <!-- ✅ JAVA VERSION -->
     <properties>
         <java.version>17</java.version>
     </properties>
 
-    <!-- ✅ SPRING BOOT PARENT -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -29,32 +27,32 @@
 
     <dependencies>
 
-        <!-- 🌱 SPRING WEB -->
+        <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- 🗄️ SPRING DATA JPA -->
+        <!-- Spring Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-        <!-- 🔐 SPRING SECURITY (MANDATORY FOR TESTS) -->
+        <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- 📘 OPENAPI / SWAGGER -->
+        <!-- Swagger / OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version>
         </dependency>
 
-        <!-- 🧪 TESTNG (MANDATORY FOR TESTS) -->
+        <!-- TestNG -->
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
@@ -62,7 +60,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- 🧪 SPRING BOOT TEST -->
+        <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -75,14 +73,14 @@
             </exclusions>
         </dependency>
 
-        <!-- 🧪 MOCKITO -->
+        <!-- Mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- 🗃️ H2 DATABASE (IN-MEMORY) -->
+        <!-- H2 Database -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -91,11 +89,9 @@
 
     </dependencies>
 
-    <!-- 🛠️ BUILD CONFIG -->
     <build>
         <plugins>
 
-            <!-- ✅ COMPILER PLUGIN -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -106,7 +102,6 @@
                 </configuration>
             </plugin>
 
-            <!-- ✅ SUREFIRE FOR TESTNG -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
