@@ -36,11 +36,9 @@ public class CategorizationRuleController {
         return ResponseEntity.ok(service.getRule(id));
     }
 
-    // GET /api/rules/category/{categoryId}
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<CategorizationRule>> getRulesByCategory(
-            @PathVariable Long categoryId) {
-
-        return ResponseEntity.ok(service.getByCategory(categoryId));
-    }
+    // Inside your GET method for category rules:
+@GetMapping("/category/{categoryId}")
+public List<CategorizationRule> getByCategory(@PathVariable Long categoryId) {
+    // Change service.getByCategory to service.getRulesByCategory
+    return service.getRulesByCategory(categoryId); 
 }
