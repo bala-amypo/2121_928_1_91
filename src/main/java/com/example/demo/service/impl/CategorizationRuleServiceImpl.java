@@ -6,6 +6,7 @@ import com.example.demo.repository.CategoryRepository;
 import com.example.demo.service.CategorizationRuleService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategorizationRuleServiceImpl
         implements CategorizationRuleService {
@@ -13,7 +14,6 @@ public class CategorizationRuleServiceImpl
     private final CategorizationRuleRepository ruleRepository;
     private final CategoryRepository categoryRepository;
 
-    // ✅ CONSTRUCTOR EXPECTED BY TESTS
     public CategorizationRuleServiceImpl(
             CategorizationRuleRepository ruleRepository,
             CategoryRepository categoryRepository
@@ -35,5 +35,16 @@ public class CategorizationRuleServiceImpl
     @Override
     public List<CategorizationRule> getByCategory(Long categoryId) {
         return ruleRepository.findAll();
+    }
+
+    @Override
+    public List<CategorizationRule> getRulesByKeyword(String keyword) {
+        return ruleRepository.findAll()
+                .stream()
+                .filter(r ->
+                        r.getKeyword() != null &&
+                        r.getKeyword().equalsIgnoreCase(keyword)
+                )
+                .collect(Collectors.toList());
     }
 }
