@@ -1,8 +1,6 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.*;
 
 @Entity
 public class Category {
@@ -11,35 +9,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String categoryName;
-    private String defaultUrgency;
-
-    private LocalDateTime createdAt;
-
-    @ManyToMany
-    private List<UrgencyPolicy> urgencyPolicies = new ArrayList<>();
-
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
+    private String name;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getCategoryName() { return categoryName; }
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public String getDefaultUrgency() { return defaultUrgency; }
-    public void setDefaultUrgency(String defaultUrgency) {
-        this.defaultUrgency = defaultUrgency;
-    }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-
-    public List<UrgencyPolicy> getUrgencyPolicies() {
-        return urgencyPolicies;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 }
