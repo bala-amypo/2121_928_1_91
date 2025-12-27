@@ -36,6 +36,8 @@ import com.example.demo.model.Category;
 import com.example.demo.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl {
     private final CategoryRepository categoryRepository;
@@ -51,5 +53,10 @@ public class CategoryServiceImpl {
     public Category getCategory(Long id) {
         return categoryRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+    }
+
+    // This method was missing
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
     }
 }

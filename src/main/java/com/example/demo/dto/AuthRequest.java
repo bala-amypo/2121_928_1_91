@@ -17,6 +17,14 @@ public class AuthRequest {
     private String email;
     private String password;
 
+    // Default Constructor
+    public AuthRequest() {}
+
+    public AuthRequest(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     // Getters and Setters
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }

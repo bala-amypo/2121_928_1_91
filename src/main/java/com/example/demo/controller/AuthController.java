@@ -23,12 +23,11 @@
 
 package com.example.demo.controller;
 
+import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.AuthResponse;
-import com.example.demo.dto.LoginRequest;
 import com.example.demo.model.User;
+import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.impl.UserServiceImpl;
-// Assume JwtUtil and AuthenticationManager are configured in security package
-// import com.example.demo.security.JwtUtil; 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,11 +42,14 @@ public class AuthController {
 
     private final UserServiceImpl userService;
     private final AuthenticationManager authenticationManager;
-    // private final JwtUtil jwtUtil; // Dependency on your specific JWT Util implementation
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthController(UserServiceImpl userService, AuthenticationManager authenticationManager) {
+    public AuthController(UserServiceImpl userService, 
+                          AuthenticationManager authenticationManager, 
+                          JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/register")
@@ -55,16 +57,17 @@ public class AuthController {
         return ResponseEntity.ok(userService.register(user));
     }
 
-    // Login endpoint implementation depends on your specific JwtUtil class
-    /*
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
-        Authentication auth = authenticationManager.authenticate(
+    public ResponseEntity<?> login(@RequestBody AuthRequest req) {
+        // Authenticate the user
+        Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword())
         );
-        // String token = jwtUtil.generateToken(...);
-        // return ResponseEntity.ok(new AuthResponse(token, ...));
-        return ResponseEntity.ok(null); // Placeholder
+
+        // Generate Token
+        String token = jwtTokenProvider.generateToken(authentication);
+        
+        // Return simple success message or AuthResponse depending on your needs
+        return ResponseEntity.ok("Login Successful. Token: " + token);
     }
-    */
 }

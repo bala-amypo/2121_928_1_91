@@ -30,6 +30,8 @@ import com.example.demo.model.UrgencyPolicy;
 import com.example.demo.repository.UrgencyPolicyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UrgencyPolicyServiceImpl {
     private final UrgencyPolicyRepository policyRepository;
@@ -45,5 +47,10 @@ public class UrgencyPolicyServiceImpl {
     public UrgencyPolicy getPolicy(Long id) {
         return policyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Policy not found"));
+    }
+
+    // This method was missing
+    public List<UrgencyPolicy> getAllPolicies() {
+        return policyRepository.findAll();
     }
 }

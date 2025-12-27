@@ -36,6 +36,8 @@ import com.example.demo.model.Ticket;
 import com.example.demo.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TicketServiceImpl {
     private final TicketRepository ticketRepository;
@@ -51,5 +53,10 @@ public class TicketServiceImpl {
     public Ticket getTicket(Long id) {
         return ticketRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Ticket not found"));
+    }
+
+    // This method was missing
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
     }
 }
