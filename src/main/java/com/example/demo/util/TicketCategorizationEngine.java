@@ -1,60 +1,7 @@
-// package com.example.demo.util;
-
-// import com.example.demo.model.*;
-
-// import java.util.List;
-
-// public class TicketCategorizationEngine {
-
-//     // ✅ METHOD REQUIRED BY TESTS
-//     public void categorize(
-//             Ticket ticket,
-//             List<Category> categories,
-//             List<CategorizationRule> rules,
-//             List<UrgencyPolicy> policies,
-//             List<CategorizationLog> logs
-//     ) {
-
-//         for (CategorizationRule rule : rules) {
-//             if (ticket.getDescription() != null &&
-//                 ticket.getDescription().toLowerCase()
-//                         .contains(rule.getKeyword().toLowerCase())) {
-
-//                 ticket.setAssignedCategory(rule.getCategory());
-//                 ticket.setUrgencyLevel(
-//                         rule.getCategory().getDefaultUrgency()
-//                 );
-
-//                 logs.add(new CategorizationLog(
-//                         ticket,
-//                         rule.getCategory(),
-//                         "RULE_MATCH"
-//                 ));
-//                 break;
-//             }
-//         }
-
-//         for (UrgencyPolicy policy : policies) {
-//             if (ticket.getDescription() != null &&
-//                 ticket.getDescription().toLowerCase()
-//                         .contains(policy.getKeyword().toLowerCase())) {
-
-//                 ticket.setUrgencyLevel(policy.getUrgencyOverride());
-
-//                 logs.add(new CategorizationLog(
-//                         ticket,
-//                         ticket.getAssignedCategory(),
-//                         "URGENCY_OVERRIDE"
-//                 ));
-//                 break;
-//             }
-//         }
-//     }
-// }
-
 package com.example.demo.util;
 
 import com.example.demo.model.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -65,20 +12,27 @@ public class TicketCategorizationEngine {
                            List<UrgencyPolicy> policies, 
                            List<CategorizationLog> logs) {
         
-        // 1. Sort rules by priority (high to low)
-        rules.sort(Comparator.comparingInt(CategorizationRule::getPriority).reversed());
+        // 1. Safety Check: Handle null title/description to avoid NullPointerException
+        String title = t.getTitle() != null ? t.getTitle() : "";
+        String desc = t.getDescription() != null ? t.getDescription() : "";
+        String text = (title + " " + desc).toLowerCase();
+
+        // 2. CRITICAL FIX: Create a mutable copy of rules before sorting
+        // List.of() in tests creates immutable lists; sorting them directly crashes the app.
+        List<CategorizationRule> mutableRules = new ArrayList<>(rules);
+        mutableRules.sort(Comparator.comparingInt(CategorizationRule::getPriority).reversed());
 
         boolean categoryFound = false;
-        String text = (t.getTitle() + " " + t.getDescription()).toLowerCase();
 
-        // 2. Apply Rules
-        for (CategorizationRule rule : rules) {
+        // 3. Apply Rules
+        for (CategorizationRule rule : mutableRules) {
             String keyword = rule.getKeyword().toLowerCase();
             boolean match = false;
             
             if ("CONTAINS".equalsIgnoreCase(rule.getMatchType())) {
                 if (text.contains(keyword)) match = true;
             } else if ("EXACT".equalsIgnoreCase(rule.getMatchType())) {
+                // For exact match, we check if the keyword matches the content exactly
                 if (text.equals(keyword)) match = true;
             }
 
@@ -100,15 +54,18 @@ public class TicketCategorizationEngine {
             }
         }
 
+        // 4. Default to LOW if no category found
         if (!categoryFound) {
             t.setUrgencyLevel("LOW");
         }
 
-        // 3. Apply Policies (Overrides)
+        // 5. Apply Policies (Overrides)
+        // Policies always override previous urgency decisions
         for (UrgencyPolicy policy : policies) {
             if (text.contains(policy.getKeyword().toLowerCase())) {
                 t.setUrgencyLevel(policy.getUrgencyOverride());
-                // Policy logs can be added here if required, but logs usually track rule matching
+                // Policy application logic does not usually generate a standard categorization log 
+                // in this spec, but the urgency is updated on the ticket object.
             }
         }
     }
